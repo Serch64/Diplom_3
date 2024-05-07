@@ -9,17 +9,24 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.openqa.selenium.By;
+import site.nomoreparties.stellarburgers.pom.MainPage;
+import site.nomoreparties.stellarburgers.steps.GeneralSteps;
+import site.nomoreparties.stellarburgers.steps.MainPageSteps;
 
 import static org.hamcrest.CoreMatchers.containsString;
+import static site.nomoreparties.stellarburgers.ChoosingBrowser.driver;
 import static site.nomoreparties.stellarburgers.pom.constants.locators.MainPageLocators.*;
 
 @DisplayName("Раздел «Конструктор»")
 @RunWith(Parameterized.class)
-public class ConstructorTest extends Steps{
+public class ConstructorTest {
     private static final String EXPECTED_CLASS_SUBSTRING = "tab_tab_type_current__2BEPc";
     private final By testedElement;
     private final By otherElement;
     private final String testedElementName;
+    private GeneralSteps generalSteps = new GeneralSteps();
+    private MainPageSteps mainPageSteps = new MainPageSteps();
+    private MainPage mainPage;
 
     public ConstructorTest(By testedElement, By otherElement, String testedElementName) {
         this.testedElement = testedElement;
@@ -38,19 +45,20 @@ public class ConstructorTest extends Steps{
 
     @Before
     public void setUp() {
-        setUpDriver();
+        generalSteps.setUpDriver();
+        mainPage = new MainPage(driver);
     }
 
     @Test
     @DisplayName("Параметризованный тест раздела «Конструктор»")
     @Description("Проверка  что работают переходы к разделам: «Булки», Соусы», «Начинки»")
     public void constructorTest() {
-        clickOnOtherElementInConstructor(otherElement);
-        clickOnOTestedElementInConstructor(testedElement);
+        mainPageSteps.clickOnOtherElementInConstructor(otherElement);
+        mainPageSteps.clickOnOTestedElementInConstructor(testedElement);
         MatcherAssert.assertThat(mainPage.getActualElementClass(testedElement), containsString(EXPECTED_CLASS_SUBSTRING));
     }
     @After
     public void shutDown() {
-        shutDownDriver();
+        generalSteps.shutDownDriver();
     }
 }

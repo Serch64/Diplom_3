@@ -26,7 +26,7 @@ public class RegisterPage {
         driver.findElement(NAME_FIELD).click();
     }
     public void setNameField() {
-       driver.findElement(NAME_FIELD).sendKeys(NAME);
+        driver.findElement(NAME_FIELD).sendKeys(NAME);
     }
     public void setEmailField() {
         driver.findElement(EMAIL_FIELD).sendKeys(EMAIL);
@@ -43,5 +43,4 @@ public class RegisterPage {
     public String getActualPasswordErrorText() {
         return driver.findElement(ERROR_HINT).getText();
     }
-
 }
